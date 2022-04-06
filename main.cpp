@@ -6,8 +6,8 @@
 
 using namespace std;
 
-map<string, string> knowledge = { // База вопросов и ответов
-    {"hello", "Oh, hello hooman!"}, // {"вопрос", "ответ"}
+map<string, string> knowledge = { 
+    {"hello", "Oh, hello hooman!"}, // {"question", "answer"}
     {"how are you", "Not too bad for a machine"},
     {"what is your name", "My creator gave me name ChatBot3000"},
     {"what are you up to", "Answering stupid question"},
@@ -15,8 +15,6 @@ map<string, string> knowledge = { // База вопросов и ответов
 
 string exitPhrases[] = {"exit", "bye", "have a good day"};
 
-// Принимает на вход строку и возвращает такую же строку,
-// только в нижнем регистре
 string to_lower(string text) {
     transform(text.begin(), text.end(), text.begin(), ::tolower);
     return text;
@@ -26,7 +24,7 @@ void botSays(string text) {
     cout << "[BOT]: " << text << "\n";
 }
 
-// Получить вопрос от пользователя
+// Question from the user
 string userQuestion() {
     string question;
     cout << "[USER]: ";
@@ -40,16 +38,16 @@ bool isExit(string text) {
         regex expression = regex(".*" + phrase + ".*");
         if (regex_match(text, expression)) {
             botSays("Ok, byeeee!!!");
-            return true; // Да, это текст содержит фразу для выхода
+            return true; // phrase for exit
         }
     }
-    return false; // Нет, не содержит
+    return false; 
 }
 
-// Выводит на экран ответ на вопрос question
+// Outputs an answer for the question
 void botAnswer(string question) {
-    bool foundAnswer = false; // Найден ли ответ
-    for (auto entry : knowledge) { // Для каждой записи в базе:
+    bool foundAnswer = false; 
+    for (auto entry : knowledge) { 
         // entry.first - вопрос
         // entry.second - ответ
         regex expression = regex(".*" + entry.first + ".*");
@@ -59,7 +57,7 @@ void botAnswer(string question) {
             foundAnswer = true;
         }
     }
-    if (!foundAnswer) { // Если не найден ответ
+    if (!foundAnswer) { // If there is no answer
         botSays("Do not comprende");
     }
 }
@@ -68,10 +66,10 @@ int main() {
 
     cout << "Hello, Welcome to ChatBot3000\n";
 
-    string question; // Объявление переменной, тип+имя
+    string question;
 
 
-    while (!isExit(question)) { // Выполняем код, пока вопрос не содержит фразы для выхода
+    while (!isExit(question)) { // Execute the code untill the exit phrase 
         question = userQuestion();
         botAnswer(question);
     }
